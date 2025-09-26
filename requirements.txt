@@ -1,0 +1,28 @@
+
+# requirements.txt
+
+# Core PaddlePaddle Framework
+# For GPU users (recommended for training):
+paddlepaddle-gpu>=2.5.0
+
+# For CPU-only users, uncomment the line below and comment out the GPU line:
+# paddlepaddle>=2.5.0
+
+# Image Processing and Augmentation
+opencv-python==4.6.0.66
+Pillow>=9.2.0
+scikit-image
+imgaug
+
+# Geometry Libraries for Text Detection
+shapely
+pyclipper
+
+# OCR-specific Metrics and Utilities
+python-Levenshtein
+lmdb
+
+# General Utilities
+PyYAML
+visualdl
+tqdm
