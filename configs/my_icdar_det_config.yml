@@ -1,0 +1,78 @@
+# configs/my_icdar_det_config.yml
+Global:
+  use_gpu: true
+  epoch_num: 50 # Start with a small number like 50 for testing
+  log_smooth_window: 20
+  print_batch_step: 10
+  save_model_dir: ./output/det_db_mv3_icdar/
+  save_epoch_step: 10
+  eval_batch_step: [0, 100] # Evaluate every 100 steps in epoch 0
+  cal_metric_during_train: true
+  pretrained_model: ./pretrain_models/MobileNetV3_large_x0_5_pretrained # Download this from PaddleOCR model zoo
+  checkpoints:
+  save_inference_dir:
+  use_visualdl: false
+  infer_img: doc/imgs_en/img_10.jpg
+  save_res_path: ./output/det_db/predicts_db.txt
+
+Architecture:
+  model_type: det
+  algorithm: DB
+  Transform:
+  Backbone:
+    name: MobileNetV3
+    scale: 0.5
+    model_name: large
+  Neck:
+    name: DBFPN
+    out_channels: 96
+  Head:
+    name: DBHead
+    k: 50
+
+Loss:
+  name: DBLoss
+  balance_loss: true
+  main_loss_type: DiceLoss
+  alpha: 5
+  beta: 10
+  ohem_ratio: 3
+
+Optimizer:
+  name: Adam
+  beta1: 0.9
+  beta2: 0.999
+  lr:
+    name: Cosine
+    learning_rate: 0.001
+    warmup_epoch: 2
+  regularizer:
+    name: L2
+    factor: 0
+
+Train:
+  dataset:
+    name: SimpleDataSet
+    data_dir: ./data/ # Root directory of your dataset
+    label_file_list:
+      - ./data/train.txt # Path to your generated training label file
+    ratio_list: [1.0]
+    transforms:
+      # ... (keep default transforms from det_mv3_db.yml)
+  loader:
+    shuffle: true
+    batch_size_per_card: 8 # Lower this if you run out of GPU memory
+    drop_last: true
+    num_workers: 4
+
+Eval:
+  dataset:
+    name: SimpleDataSet
+    data_dir: ./data/ # Root directory
+    label_file_list:
+      - ./data/val.txt # Path to your generated validation label file
+  loader:
+    shuffle: false
+    drop_last: false
+    batch_size_per_card: 8
+    num_workers: 4
