@@ -1,9 +1,3 @@
-Of course. Here is a complete `README.md` file written from scratch. It incorporates the details from your project description and integrates the successful, step-by-step workflow we established through our troubleshooting sessions.
-
-This version is more detailed, structured as a foolproof guide, and includes a troubleshooting section to help users avoid common errors.
-
------
-
 # End-to-End PaddleOCR Training for Scene Text Recognition
 
 This repository provides a complete, reproducible workflow for training custom scene text detection models using the powerful **PaddleOCR** framework. It guides you from initial setup and data preparation to model training and inference, using the ICDAR 2019 MLT dataset as a primary example.
